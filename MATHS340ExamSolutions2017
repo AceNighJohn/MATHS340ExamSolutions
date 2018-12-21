@@ -1,0 +1,429 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{geometry}
+\geometry{legalpaper, top=1in, bottom=1in}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{commath}
+
+\newcommand{\uvec}[1]{\boldsymbol{\hat{\textbf{#1}}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{MATHS340: Real and Complex Calculus}
+\fancyhead[R]{AceNighJohn}
+
+\begin{document}
+\begin{titlepage}
+   \vspace*{\stretch{1.0}}
+   \begin{center}
+      \Large\textbf{MATHS340: Real and Complex Calculus}\\
+      \large\textbf{2017 Exam} \\ 
+      \large\textit{AceNighJohn}
+   \end{center}
+   \vspace*{\stretch{2.0}}
+\end{titlepage}
+\begin{enumerate}
+\item (18 marks) \\
+Verify Green's Theorem in the plane for
+\begin{equation*}
+    \oint_{C} \text{sin}(x) \ dx + xy \ dy
+\end{equation*}
+where $C$ is the closed curve consisting of the line segment joining 
+$(\frac{\pi}{2}, 1)$ to $(0, 1)$, the line segment joining $(0, 1)$ to $(0, 0)$, and the portion of the curve $y = \text{sin}(x)$ between $(0, 0)$ and
+$(\frac{\pi}{2}, 1)$. C is traversed in an anti-clockwise direction. \\
+$\textbf{Solution:}$ \\
+Let $F = P\uvec{i} + Q\uvec{j} = \text{sin}(x)\uvec{i} + xy\uvec{j}$.
+We require $\oint_{C} F \cdot \ d\mathbf{r} = \iint_{R} (Q_x - P_y) \ dA$. \\
+We have $Q_x = y$, $P_y = 0$ and $R = \{(x,y) | \ 0 \leq x \leq \frac{\pi}{2},\ \text{sin}(x) \leq y \leq 1\}$. 
+\begin{equation*}
+\begin{split}
+    \iint_{R} (Q_x - P_y) \ dA &= 
+    \int_{0}^{\frac{\pi}{2}} \int_{\text{sin}(x)}^{1} y \ dy \ dx
+    = \frac{1}{2} \int_{0}^{\frac{\pi}{2}} \text{cos}^2(x) \ dx \\
+    &= \frac{1}{4} \int_{0}^{\frac{\pi}{2}} (1 + \text{cos}(2x)) \ dx 
+    = \frac{\pi}{8}
+\end{split}
+\end{equation*}
+Calculating the integral directly; $C = C_1 + C_2 + C_3$. \\
+Parameterising $C_1$; $\mathbf{r}(t) = [t, \ \text{sin}(t)] \ \text{for} \ t \in [0, \frac{\pi}{2}]$. \\
+Thus, $\mathbf{r}'(t) = [1, \ \text{cos}(t)]$ and $F(\mathbf{r}(t)) = \text{sin}(t)\uvec{i} + t\text{sin}(t)\uvec{j}$.
+\begin{equation*}
+    \int_{C_1} F \cdot \ d\mathbf{r} = \int_{0}^{\frac{\pi}{2}} F(\mathbf{r}(t)) \cdot \mathbf{r}'(t) \ dt
+    = \int_{0}^{\frac{\pi}{2}} (\text{sin}(t) + t\text{cos}(t)\text{sin}(t)) \ dt = \frac{\pi}{8} + 1
+\end{equation*}
+This integral is not easy to solve by hand and requires trigonometric identities. In the exam, I would guess this after completing the other integrals. \\
+Parameterising $C_2$; $\mathbf{r}(t) = [t, 1] \ \text{for} \ t \in [\frac{\pi}{2}, 0]$. \\
+Thus, $\mathbf{r}'(t) = [1, 0]$ and $F(\mathbf{r}(t)) = \text{sin}(t)\uvec{i} + t\uvec{j}$.
+\begin{equation*}
+    \int_{C_2} F \cdot \ d\mathbf{r} = \int_{\frac{\pi}{2}}^{0} F(\mathbf{r}(t)) \cdot \mathbf{r}'(t) \ dt
+    = \int_{\frac{\pi}{2}}^{0} \text{sin}(t) \ dt = -1
+\end{equation*}
+Parameterising $C_3$; $\mathbf{r}(t) = [0, t] \ \text{for} \ t \in [1, 0]$. \\
+Thus, $\mathbf{r}'(t) = [0, 1]$ and $F(\mathbf{r}(t)) = 0\uvec{i} + 0\uvec{j}$.
+\begin{equation*}
+    \int_{C_2} F \cdot \ d\mathbf{r} = \int_{1}^{0} F(\mathbf{r}(t)) \cdot \mathbf{r}'(t) \ dt = 0
+\end{equation*}
+Therefore,
+\begin{equation*}
+    \oint_{C} F \cdot \ d\mathbf{r} 
+    = \sum_{i=1}^{3}\int_{C_i} \mathbf{F} \cdot d\mathbf{r} 
+    = \frac{\pi}{8}
+\end{equation*}
+Since $\iint_{R} (Q_x - P_y) \ dA = \oint_{C} F \cdot \ d\mathbf{r} = \frac{\pi}{8}$, we have verified Green's Theorem.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Q1.PNG}
+\end{figure}
+\newpage
+\item (17 marks) \\
+Let $\mathbf{v} = xz \uvec{i} + z^2 x \uvec{j} + y^2 \uvec{k}$
+\begin{enumerate}
+    \item 
+    Calculate div $\mathbf{v}$ and curl $\mathbf{v}$.
+    \item
+    Use the divergence theorem to calculate 
+    $\iint_{S}  \mathbf{n} \cdot \mathbf{v} \ dA$, where S is the surface consisting of the cone $x^2 +y^2 = z^2$ between $z = 0$ and $z = 3$, together with the disc $x^2 +y^2 =9$ in the plane $z = 3$. $\mathbf{n}$ is a unit normal vector pointing outwards from the volume bounded by the surface.
+    \item
+    Use Stokes' theorem to calculate $\oint_{C} \mathbf{v} \cdot \ dR $, where $C$ consists of the line segments joining $(0, 0, 0)$ to $(1, 0, 0)$, $(1, 0, 0)$ to $(1, 0, 1)$, $(1, 0, 1)$ to $(0, 0, 1)$, and $(0, 0, 1)$ to $(0, 0, 0)$. $C$ is traversed in the direction such that the points $(0, 0, 0)$, $(1, 0, 0)$, $(1, 0, 1)$, and $(0, 0, 1)$ are visited in that order.
+\end{enumerate}
+$\textbf{Solution:}$ \\
+(a)
+\begin{equation*}
+    \text{div} \ \mathbf{v} = z, \ \text{curl} \ \mathbf{v} = 2(y-xz)\uvec{i} +x \uvec{j} + z^2 \uvec{k}  
+\end{equation*}
+(b) Parameterising $S$ with cylindrical co-ordinates, $x=r\text{cos}(\theta)$, $x=r\text{sin}(\theta)$, $z=r$ for $0 \leq r \leq 3$, $0 \leq \theta \leq 2\pi$, $0 \leq z \leq r $.
+\begin{equation*}
+    \iint_{S}  \mathbf{n} \cdot \mathbf{v} \ dA
+    = \iiint_{V} \text{div} \ \mathbf{v} \ dV
+    = \int_0^{2\pi} \int_0^3 \int_0^r z \cdot r  \ dz \ dr \ d\theta
+    = \frac{81\pi}{4}
+\end{equation*}
+(c) Let the surface bounded by $C$ be called $S$, then the simplest such surface would be $y=0$ where $R = \{(x,y)| \ 0 \leq x \leq 1$, $0 \leq z \leq 1 \}$. Using the right hand rule, $\mathbf{n} = -\uvec{j}$. 
+\begin{equation*}
+    \oint_{C} \mathbf{v} \cdot \ dR 
+    = \iint_{S} curl(\mathbf{v}) \cdot \mathbf{n} \ dS
+    = \iint_{R} -x \ dA
+    = -\int_0^1 \int_0^1 x \ dA
+    = -\frac{1}{2}
+\end{equation*}
+
+\item
+(16 marks) Find all solutions to the following equations and plot them in the complex plane. If there are infinitely many solutions, plot enough to show the pattern and describe the pattern in words.
+\begin{enumerate}
+    \item 
+    $z^4 = 1 - i$
+    \item
+    $z = i ^ {-i}$
+    \item
+    $z^2+4z+4-i = 0$
+\end{enumerate}
+\textbf{Solution:} \\
+(a)
+\begin{equation*}
+    z^4 = 1 - i = \sqrt{2}e^{i(\frac{7\pi}{4} + 2k\pi)}
+\end{equation*}
+\begin{equation*}
+    z = 2^\frac{1}{8} e^{\frac{1}{4}(\frac{7\pi}{4} + 2k\pi)i} \ \text{for} \ k \in \mathbb{Z}
+\end{equation*}
+There exist 4 distinct solutions which lie on a circle of radius $2^\frac{1}{8}$ and are equally spaced.
+\begin{equation*}
+    z_1 = 2^\frac{1}{8} e^{\frac{7\pi}{16}i}, 
+    \ z_2 = 2^\frac{1}{8} e^{\frac{15\pi}{16}i},
+    \ z_3 = 2^\frac{1}{8} e^{\frac{23\pi}{16}i},
+    \ z_4 = 2^\frac{1}{8} e^{\frac{31\pi}{16}i}
+\end{equation*}
+(b)
+\begin{equation*}
+    z = i ^ {-i} = e^{\text{ln}(i ^ {-i})}
+    = e^{-i\text{ln}(i)}
+    = e^{-i\text{ln}(e^{i(\frac{\pi}{2}+2k\pi)})}
+    = e^{\frac{\pi}{2}+2k\pi}
+    \ \text{for} \ k \in \mathbb{Z}
+\end{equation*}
+There are infinite solutions which all lie on the real axis of the complex plane. \\
+As $k \rightarrow \infty, z \rightarrow \infty$. As $k \rightarrow -\infty, z \rightarrow 0$. \\
+(c) Using the quadratic formula, \\
+\begin{equation*}
+    z = \frac{-4 \pm \sqrt{16 - 4(4-i)}}{2}
+    = -2 \pm \sqrt{i}
+\end{equation*}
+\begin{equation*}
+    \sqrt{i} = i^{\frac{1}{2}} = e^{i(\frac{\pi}{2} + 2k\pi)^{\frac{1}{2}}} = e^{i(\frac{\pi}{4} + k\pi)} \ \text{for} \ k \in \mathbb{Z}
+\end{equation*}
+There are two distinct solutions, let $k=0$ and $k=1$; $\sqrt{i} = e^{\frac{\pi}{4}i}$ and $\sqrt{i} = e^{\frac{5\pi}{4}i}$.
+Thus,
+\begin{equation*}
+    z = -2 + e^{\frac{\pi}{4}i}, \ z = -2 + e^{\frac{5\pi}{4}i}
+\end{equation*}
+There are two distinct solutions that are equally spaced on a circle of radius 1, centred at (-2,0). 
+\item
+(8 marks) Use the Cauchy Riemann equations to determine the region of $\mathbb{C}$ for which each of the following functions is analytic. In the following, $z = x + iy$.
+\begin{enumerate}
+    \item 
+    $f(z) = \abs{x} + iy$
+    \item
+    $f(z) = \text{sin}(\overline{z})$
+\end{enumerate}
+\textbf{Solution:} \\
+(a)
+\begin{equation*}
+    u = \abs{x}, \ v = y
+\end{equation*}
+\begin{equation*}
+    v_y = 1, \ v_x = 0, \ u_y = 0, \
+   u_x =  \begin{cases} 
+    1 & x >  0 \\
+    -1 & x < 0
+    \end{cases}
+\end{equation*}
+Using C-R equations:
+\begin{equation*}
+    v_x=-u_y \ \text{for all} \ x,y \in \mathbb{R}, \ 
+    u_x = v_y \ \text{when} \ x>0 \ \text{and for all} \ y \in \mathbb{R}
+\end{equation*}
+Hence, $f(z)$ is analytic for all $y \in \mathbb{R}$ and when $x>0$. \\
+(b) 
+\begin{equation*}
+\begin{split}
+    f(z) &= \text{sin}(\overline{z})
+    = \frac{e^{i\overline{z}}-e^{-i\overline{z}}}{2i}
+    = \frac{e^{y}e^{ix}-e^{-y}e^{-ix}}{2i}
+    = \frac{1}{2i}[e^y(\text{cos}(x)+i\text{sin}(x)) - e^{-y}(\text{cos}(x)-i\text{sin}(x))] \\
+    &= \frac{1}{2i} [\text{cos}(x)(e^y-e^{-y}) + i\text{sin}(x)(e^y+e^{-y})]
+    = \text{sin}(x)\frac{e^y+e^{-y}}{2} -i\text{cos}(x)\frac{e^y-e^{-y}}{2} \\
+    &= \text{sin}(x)\text{cosh}(y) - i\text{cos}(x)\text{sinh}(y)
+    = u + iv
+\end{split}
+\end{equation*}
+\begin{equation*}
+    u_x = \text{cos}(x)\text{cosh}(y), 
+    \ u_y = \text{sin}(x)\text{sinh}(y),
+    \ v_x = \text{sin}(x)\text{sinh}(y),
+    \ v_y = -\text{cos}(x)\text{cosh}(y)
+\end{equation*}
+Using C-R equations:
+\begin{equation*}
+    u_x=v_y \Longrightarrow 2\text{cos}(x)\text{cosh}(y) = 0
+    \Longrightarrow \text{cos}(x) = 0 \ \text{or} \  \text{cosh}(y) = 0
+    \Longrightarrow x = \frac{\pi}{2} +k\pi \ \text{for} \ k \in \mathbb{Z}
+\end{equation*}
+\begin{equation*}
+    \text{cosh}(y) = \frac{e^y+e^{-y}}{2} = 0 
+    \Longrightarrow e^y+e^{-y} = 0
+    \Longrightarrow e^{2y}+1 = 0,
+    \ \text{thus we have no real solution for $y$}.
+\end{equation*}
+\begin{equation*}
+    v_x = -u_y \Longrightarrow 2\text{sin}(x)\text{sinh}(y) = 0
+    \Longrightarrow \text{sin}(x) = 0, \ \text{sinh}(y) = 0 
+    \Longrightarrow x = \pi k \ \text{for} \ k \in \mathbb{Z}
+\end{equation*}
+\begin{equation*}
+    \text{sinh}(y)=\frac{e^y-e^{-y}}{2}=0
+    \Longrightarrow e^y-e^{-y} = 0
+    \Longrightarrow e^{2y}-1 = 0
+    \Longrightarrow y=0
+\end{equation*}
+Both equations are never satisfied by any individual $x$, thus we must have $y = 0$ and \\ $x = \frac{\pi}{2} +k\pi , \ k \in \mathbb{Z}$. There can never exist an open ball around these points. Hence, $f(z)$ is nowhere analytic.
+\item
+(16 marks) For the function
+\begin{equation*}
+    f(z) = \frac{4}{(z+1)(z-3)}
+\end{equation*}
+calculate the Laurent series in each of the following regions.
+\begin{enumerate}
+    \item 
+    $1 < \abs{z} < 3$
+    \item
+    $\abs{z} > 3$
+    \item
+    $\abs{z-i} < \sqrt{2}$
+\end{enumerate}
+\begin{itemize}
+    \item 
+    For each series give the constant term as well as the first three non-zero terms with positive powers of $(z - a)$ and the first three non-zero terms with negative powers of $(z -a)$.
+    \item
+    For each series, you should group like terms together but you do not need to simplify their coefficients.
+\end{itemize}
+\textbf{Solution:} \\
+$f(z)$ is singular at the points: $z=-1$ and $z=3$. \\
+Using partial fractions, or simply, by observation:
+\begin{equation*}
+    \frac{4}{(z+1)(z-3)} = \frac{-1}{z+1} + \frac{1}{z-3}
+\end{equation*}
+(a) In the region: $1 < \abs{z} < 3$, we have $\frac{1}{\abs{z}}<1$ and $\frac{\abs{z}}{3}<1$. Using the geometric series:
+\begin{equation*}
+\begin{split}
+    \frac{-1}{z+1} &= - \frac{\frac{1}{z}}{1+\frac{1}{z}}
+    = -\frac{1}{z} \ \frac{1}{1-(-\frac{1}{z})}
+    = -\frac{1}{z} [1 - \frac{1}{z} + \frac{1}{z^2} - \frac{1}{z^3}+...] \\
+    &= -\frac{1}{z} + \frac{1}{z^2} - \frac{1}{z^3} + \frac{1}{z^4}+...
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+    \frac{1}{z-3} &= \frac{\frac{1}{3}}{\frac{z}{3}-1}
+    = -\frac{1}{3} \ \frac{1}{1-\frac{z}{3}}
+    = -\frac{1}{3} [1 + \frac{z}{3} + \frac{z^2}{9} - \frac{z^3}{27}+...] \\
+    &= -\frac{1}{3} -\frac{z}{9} - \frac{z^2}{27} - \frac{z^3}{81}-...
+\end{split}
+\end{equation*}
+Hence,
+\begin{equation*}
+    \frac{-1}{z+1} + \frac{1}{z-3}
+    = ... - \frac{1}{z^3} +\frac{1}{z^2} -\frac{1}{z} - \frac{1}{3} -\frac{z}{9} - \frac{z^2}{27} - \frac{z^3}{81} - ...
+\end{equation*}
+(b) In the region: $\abs{z} > 3$, we have $\frac{3}{\abs{z}} < 1$ (notice that $\abs{\frac{1}{z}} < \frac{3}{\abs{z}} < 1$).
+\begin{equation*}
+\begin{split}
+    \frac{-1}{z+1} &= -\frac{1}{z} \ \frac{1}{1-(-\frac{1}{z})}
+    = -\frac{1}{z} [1 - \frac{1}{z} + \frac{1}{z^2} - \frac{1}{z^3}+...] \\
+    &= -\frac{1}{z} + \frac{1}{z^2} - \frac{1}{z^3} + \frac{1}{z^4}+...
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+    \frac{1}{z-3} &= = \frac{1}{z} \ \frac{1}{1-\frac{3}{z}}
+    = \frac{1}{z} [1 + \frac{3}{z} + \frac{9}{z^2} + \frac{27}{z^3}+...] \\
+    &= \frac{1}{z} + \frac{3}{z^2} + \frac{9}{z^2} + \frac{27}{z^3}+...
+\end{split}
+\end{equation*}
+Hence,
+\begin{equation*}
+    \frac{-1}{z+1} + \frac{1}{z-3}
+    = \frac{4}{z^2} + \frac{8}{z^3} + \frac{28}{z^4} + ...
+\end{equation*}
+(c) In the region: $\abs{z-i} < \sqrt{2}$, we have $\frac{\abs{z-i}}{2} < 1$.
+\begin{equation*}
+\begin{split}
+    \frac{-1}{z+1} &= -\frac{1}{z-i+1+i} = -\frac{1}{1+i} \ \frac{1}{\frac{z-i}{1+i} + 1}
+    = -\frac{1}{1+i} [1 - \frac{z-i}{1+i} + (\frac{z-i}{1+i})^2 - (\frac{z-i}{1+i})^3 + ...] \\
+    &= -\frac{1}{1+i} + \frac{z-i}{(1+i)^2} - \frac{(z-i)^2}{(1+i)^3} + \frac{(z-i)^3}{(1+i)^4} - ...
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+    \frac{1}{z-3} &= \frac{1}{z-i-3+i} = \frac{\frac{1}{3-i}}{\frac{z-i}{3-i} - 1}
+    = -\frac{1}{3-i} \ \frac{1}{\frac{z-i}{3-i}}
+    = -\frac{1}{3-i} [1 + \frac{z-i}{3-i} + (\frac{z-i}{3-i})^2 + (\frac{z-i}{3+i})^3 + ...] \\
+    &= -\frac{1}{3-i} - \frac{z-i}{(3-i)^2} - \frac{(z-i)^2}{(3-i)^3} - \frac{(z-i)^3}{(3-i)^4} - ...
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+    \frac{-1}{z+1} + \frac{1}{z-3}
+    &= (-\frac{1}{1+i} - \frac{1}{3-i}) + (\frac{1}{(1+i)^2} - \frac{1}{(3-i)^2})(z-i) + (-\frac{1}{(3-i)^3} - \frac{1}{(1+i)^3})(z-i)^2 \\
+    &+ (\frac{1}{(1+i)^4} -\frac{1}{(3-i)^4})(z-i)^3 + ...
+\end{split}
+\end{equation*}
+\item (10 marks)
+\begin{enumerate}
+    \item 
+    If $C$ is the circle of radius 3 centred at $z = 0$ and oriented anticlockwise, calculate
+    \begin{equation*}
+        \oint_{C} \frac{dz}{z(z+2)^3}
+    \end{equation*}
+    You may use, without proof, the identity
+    \begin{equation*}
+        \frac{1}{z(z+2)^3} = \frac{1}{8z} - \frac{z^2+6z+12}{8(z+2)^3}
+    \end{equation*}
+    \item
+    If $C$ is the rectangle with corners at $z = -3, 3, 3+3i, -3+3i$ oriented clockwise, calculate
+    \begin{equation*}
+        \oint_{C} \frac{z+1}{z^2+4} \ dz
+    \end{equation*}
+\end{enumerate}
+\textbf{Solution}: \\
+(a) Let $f(z) = \frac{1}{z(z+2)^3}, f(z)$ is singular at $z=0$ and $z=-2$. Both singularities lie inside $C$.
+\begin{equation*}
+\begin{split}
+    \oint_{C} \frac{dz}{z(z+2)^3}
+    &= \oint_{C} (\frac{1}{8z} - \frac{z^2+6z+12}{8(z+2)^3}) \ dz
+    = \oint_{C} \frac{1}{8z} \ dz - \oint_{C} \frac{z^2+6z+12}{8(z+2)^3}) \ dz \\
+    &= \frac{1}{8} \oint_{C} \frac{1}{z} \ dz - \frac{1}{8} \oint_{C} \frac{z^2+6z+12}{(z+2)^3} \ dz
+    = \frac{1}{8} 2\pi i - \frac{1}{8} \oint_{C} \frac{g(z)}{(z+2)^3} \ dz \\
+    &= \frac{\pi}{4}i - \frac{\pi}{4}i = 0
+\end{split}
+\end{equation*}
+By the important little integral and Cauchy's Generalized Integral formula (Residue Theorem could be used instead).
+\begin{equation*}
+    \oint_{C} \frac{g(z)}{(z+2)^3} \ dz = \frac{2\pi i}{2!}g''(-2)
+    = 2\pi i, \ \text{$g(z)$ is analytic in and on $C$}
+\end{equation*}
+(b) Let $f(z) = \frac{z+1}{z^2+4}$, $f(z)$ is singular at $z = 2i$ and $z = -2i$. $z = 2i$ is inside $C$ while $z = -2i$ is not. Notice that the contour is oriented clockwise.
+\begin{equation*}
+\begin{split}
+    \oint_{C} \frac{z+1}{z^2+4} \ dz 
+    &= \oint_{C} \frac{z+1}{(z-2i)(z+2i)} \ dz
+    = \oint_{C} \frac{\frac{z+1}{z+2i}}{z-2i} \ dz
+    = \oint_{C} \frac{g(z)}{z-2i} \ dz
+    = -2 \pi i \ g(2\pi) \\
+    &= -\frac{\pi}{2}(1+2i)
+\end{split}
+\end{equation*}
+By Cauchy's Integral Formula, $g(z)$ is analytic in and on $C$.
+\newpage
+\item
+(15 marks) By converting to an appropriate integral in the complex plane, evaluate the following integral.
+\begin{equation*}
+    \int_{-\infty}^{\infty} \frac{1}{(x^2+1)^2} \ dx
+\end{equation*}
+\textit{You may use the residue theorem without proof, but you must state the theorem carefully. Make sure to justify all steps in your calculations.} \\
+\textbf{Solution:} \\
+This exact problem is in the coursebook. For ease of access, I will provide the solution here as well.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.7]{Q7.PNG}
+\end{figure}
+\begin{equation*}
+\begin{split}
+    \oint _ { C _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } 
+    & = 2 \pi i \operatorname { Res } _ { i } f 
+    = 2 \pi i \lim _ { z \rightarrow i } \frac { d } { d z } \left( ( z - i ) ^ { 2 } \frac { 1 } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } \right) \\ & 
+    = 2 \pi i \lim _ { z \rightarrow i } \frac { d } { d z } \frac { 1 } { ( z + i ) ^ { 2 } } 
+    = 2 \pi i \lim _ { z \rightarrow i } \frac { - 2 } { ( z + i ) ^ { 3 } } \\ & 
+    = 2 \pi i \frac { 1 } { 4 i } 
+    = \frac { \pi } { 2 }  
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+    \text { If } | z | = R , 
+    \text { then } \abs{z ^ { 2 } + 1} \geq | z | ^ { 2 } - 1 = R ^ { 2 } - 1 \geq \frac { 1 } { 2 } R^2 , \text { so }
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+    \left| \frac { 1 } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } \right|
+    \leq \frac { 1 } { \left( \frac { 1 } { 2 } R ^ { 2 } \right) ^ { 2 } } = \frac { 4 } { R ^ { 4 } }
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+    \left| \lim  _ { R \rightarrow \infty } \int _ { \Gamma _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right|) ^ { 2 } } 
+    \left| \leq \frac { 4 } { R ^ { 4 } } \cdot \pi R = \frac { 4 \pi } { R ^ { 3 } }\right. 
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+     \lim _ { R \rightarrow \infty } \int _ { \Gamma _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } = 0 
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+    \frac { \pi } { 2 } & = \oint _ { C _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } = \lim _ { R \rightarrow \infty } \oint _ { C _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } \\ & = \lim _ { R \rightarrow \infty } \left( \int _ { L _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } + \int _ { \Gamma _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } \right) \\ & = \lim _ { R \rightarrow \infty } \int _ { - R } ^ { R } \frac { d x } { \left( x ^ { 2 } + 1 \right) ^ { 2 } } + \lim _ { R \rightarrow \infty } \int _ { \Gamma _ { R } } \frac { d z } { \left( z ^ { 2 } + 1 \right) ^ { 2 } } \\ & = \int _ { - \infty } ^ { \infty } \frac { d x } { \left( x ^ { 2 } + 1 \right) ^ { 2 } } 
+\end{split}
+\end{equation*}
+
+\end{enumerate}
+\end{document}
+
